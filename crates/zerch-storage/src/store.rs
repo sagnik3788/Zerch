@@ -21,7 +21,12 @@ impl VectorStore {
             .open(&self.path)?;
 
         // change this line
-        let bytes = unsafe { vector.align_to::<u8>().1 };
+        let bytes = unsafe {
+            std::slice::from_raw_parts(
+                vector.as_ptr() as *const u8,
+                vector.len() * std::mem::size_of::<f32>(),
+            )
+        };
 
         file.write_all(bytes)?;
         file.flush()?;
