@@ -4,7 +4,9 @@ pub struct CosineSimilarity {
 }
 pub fn cosine_similarity(a: &[f32], b: &[f32]) -> CosineSimilarity {
     if a.len() != b.len() {
-        return CosineSimilarity { score: 0.0 };
+        return CosineSimilarity {
+            score: f32::NEG_INFINITY,
+        };
     }
 
     let dot_product: f32 = a
